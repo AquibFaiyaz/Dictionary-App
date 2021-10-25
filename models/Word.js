@@ -3,8 +3,10 @@ const mongoose = require("mongoose");
 const WordSchema = mongoose.Schema({
   wordID: {
     type: String,
-    requires: [true, "please enter a word"],
+    required: [true, "please enter a word"],
     lowercase: true,
+    trim: true,
+    unique: true,
   },
   text: String,
   defData: Array,

@@ -23,4 +23,13 @@ const postWordDB = async (req, res) => {
   });
 };
 
-module.exports = { postWordDB };
+const getAllWords = async (req, res) => {
+  try {
+    const data = await Word.find({});
+    res.status(200).json({ data });
+  } catch (error) {
+    res.send("error");
+  }
+};
+
+module.exports = { postWordDB, getAllWords };
