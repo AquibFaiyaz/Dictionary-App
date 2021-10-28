@@ -4,23 +4,27 @@ const getDictWord = require("../data");
 const postWordDB = async (req, res) => {
   const { wordID } = req.body;
 
-  getDictWord(wordID).then(async (response) => {
-    const { text, senses } = response;
-    const defData = senses.map((entry) => {
-      const { definitions, subsenses } = entry;
+  getDictWord(wordID)
+    .then(async (response) => {
+      const { text, senses } = response;
+      const defData = senses.map((entry) => {
+        const { definitions, subsenses } = entry;
 
-      if (subsenses !== undefined) {
-        const subDefinitions = subsenses.map((subdef) => {
-          return subdef.definitions[0];
-        });
-        return { definitions: definitions[0], subDefinitions };
-      }
+        if (subsenses !== undefined) {
+          const subDefinitions = subsenses.map((subdef) => {
+            return subdef.definitions[0];
+          });
+          return { definitions: definitions[0], subDefinitions };
+        }
 
-      return { definitions: definitions[0], subDefinitions: [] };
+        return { definitions: definitions[0], subDefinitions: [] };
+      });
+      const word = await Word.create({ wordID, text, defData });
+      res.status(201).json({ msg: "added successfully" });
+    })
+    .catch((error) => {
+      res.status(404).json({ success: false, msg: "word not found." });
     });
-    const word = await Word.create({ wordID, text, defData });
-    res.status(201).json(word);
-  });
 };
 
 const getAllWords = async (req, res) => {
@@ -28,7 +32,7 @@ const getAllWords = async (req, res) => {
     const data = await Word.find({});
     res.status(200).json({ data });
   } catch (error) {
-    res.send("error");
+    res.status(404).json({ success: false, msg: "unable to fetch data" });
   }
 };
 
