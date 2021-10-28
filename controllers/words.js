@@ -3,7 +3,9 @@ const getDictWord = require("../data");
 
 const postWordDB = async (req, res) => {
   const { wordID } = req.body;
-
+  if (!wordID) {
+    return res.status(201).json({ msg: "Please enter a word" });
+  }
   getDictWord(wordID)
     .then(async (response) => {
       const { text, senses } = response;
