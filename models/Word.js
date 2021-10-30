@@ -10,6 +10,7 @@ const WordSchema = mongoose.Schema({
   },
   text: String,
   defData: Array,
+  memorized: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("Word", WordSchema);
