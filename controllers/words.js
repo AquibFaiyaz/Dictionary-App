@@ -6,7 +6,7 @@ const postWordDB = async (req, res) => {
   if (!wordID) {
     return res.status(201).json({ msg: "Please enter a word" });
   }
-  getDictWord(wordID)
+  await getDictWord(wordID)
     .then(async (response) => {
       const { text, senses } = response;
       const defData = senses.map((entry) => {
