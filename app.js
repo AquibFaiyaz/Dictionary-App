@@ -19,7 +19,7 @@ const port = process.env.PORT || 8000;
 const start = async ({ dbConnectUrl, apiPort }) => {
   try {
     await connectDB(dbConnectUrl);
-    app.listen(apiPort, () => {
+    app.listen(apiPort, "0.0.0.0", () => {
       console.log(`Server is listening on ${port}`);
     });
   } catch (error) {
