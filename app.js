@@ -15,12 +15,12 @@ app.use(express.json());
 app.use("/api/v1/dictionary", words);
 
 const url = process.env.MONGO_URI;
-const port = process.env.port || 8000;
+const port = process.env.PORT || 8000;
 const start = async ({ dbConnectUrl, apiPort }) => {
   try {
     await connectDB(dbConnectUrl);
     app.listen(apiPort, () => {
-      console.log("server listening on port 8000...");
+      console.log(`Server is listening on ${port}`);
     });
   } catch (error) {
     console.log(error);
